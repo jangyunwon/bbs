@@ -1,0 +1,14 @@
+package mms.member.action;
+//
+import java.util.Scanner;
+
+public class MemberAddAction implements Action {
+
+	public void execute(Scanner sc) throws Exception {
+		
+		
+	}
+
+	
+
+}

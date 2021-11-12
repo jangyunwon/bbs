@@ -1,0 +1,43 @@
+package plsql;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Types;
+
+public class Plsqlprocedure {
+
+	public static void main(String[] args) throws SQLException, ClassNotFoundException {
+		//Oracle DB연결
+		//DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+		//1.driver 연결
+		//Class.forName("java.lang.String");
+		Class.forName("oracle.jdbc.driver.OracleDriver");
+		String url = "jdbc:oracle:thin:@localhost:1521:orcl";
+		//변수 선언
+		int p1InValue = Integer.parseInt(args[0]);
+		int p2InOutValue = Integer.parseInt(args[1]);
+		int p3OutValue;
+		//2.계정 연결
+		Connection conn = DriverManager.getConnection(url, "javalink", "javalink");//주소,DB:ID,암호
+	  CallableStatement cs = conn.prepareCall("{call computer_power(?,?,?)}");
+	  cs.setInt(1, p1InValue);
+	  cs.setInt(2, p2InOutValue);
+	  cs.registerOutParameter(2, Types.INTEGER);
+	
+	  cs.registerOutParameter(3, Types.INTEGER);
+	  cs.execute(); //update,query
+	  p2InOutValue = cs.getInt(2);
+	  p3OutValue = cs.getInt(3);
+	  
+	  System.out.println(p1InValue);
+		
+		Statement stmt = conn.createStatement();
+	   //3.query
+	   String query="select* from emp";
+	
+	
+	}
+}

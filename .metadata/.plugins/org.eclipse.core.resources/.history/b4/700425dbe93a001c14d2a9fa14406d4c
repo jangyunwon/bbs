@@ -1,0 +1,42 @@
+package test4.mvc;
+
+import java.util.Scanner;
+import java.util.Vector;
+
+public class Serviceimpl implements Service {
+	Scanner sc = new Scanner(System.in);
+	Dao dao = new OracleDao();
+	
+	@Override
+	public void addProduct() {//insert
+		System.out.println("제품이름은?");
+		String name = sc.next();
+		System.out.println("제품가격은?");
+		int price = sc.nextInt();
+		dao.insert(new Product(0,name,price));
+	}
+
+	@Override
+	public void editProduct() {  //select one
+		
+
+	}
+
+	@Override
+	public Vector<Product> getProducts() { //select all
+		
+		return null;
+	}
+
+	@Override
+	public void delProduct() { //delete
+		
+
+	}
+
+	@Override
+	public  Product getProduct() { //update
+		return null;
+	}
+
+}

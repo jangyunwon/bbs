@@ -1,0 +1,95 @@
+package test4.mvc;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Vector;
+
+public class OracleDao implements Dao {
+
+	//DBCconnect dbconn = new DBConnection();
+	private Connection conn = null;
+	private PreparedStatement pstmt = null;
+
+	public OracleDao() {
+		DBConnect dbconn = DBConnect.getInstance();//1.singleton을 통한 객체생성
+		conn = dbconn.getConnection(); //2.db연결
+	
+	}
+	
+	public Connection getConn() {
+		return conn;
+	}
+	
+	@Override
+	public void insert(Product p) {
+		String sql = "insert into product values(product_seq.nextval,?,?)";
+
+	
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, p.getName());
+			pstmt.setInt(2, p.getPrice());
+			
+			int count= pstmt.executeUpdate();
+		
+			if(count>0) {
+				System.out.println("데이터가 저장되었습니다.");
+			} else {
+				System.out.println("데이터가 저장되지 않았습니다.");
+			}
+		} catch (SQLException e) {
+		
+		}
+	
+	
+	
+	
+	}
+
+	@Override
+	public Product select(int num) {
+		Product p = null;
+		try {
+			String query = "select * from product where num=?";
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setInt(1, num);
+			ResultSet rs = pstmt.executeQuery(query);
+			while(rs.next()) {
+//				int num = rs.getInt("num2");
+				String name = rs.getString("name");
+				int price = rs.getInt("price");
+				p = new Product (num,name,price);
+				//System.out.println(num+" : "+name+" : "+price);
+		} 
+	
+		}
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return p;
+	}
+
+	@Override
+	public Vector<Product> selectAll() {
+	
+		return null;
+	}
+
+	@Override
+	public void delete(int num) {
+	
+		
+	}
+
+	@Override
+	public void update(int num, Product p) {
+	
+		
+	}
+
+}

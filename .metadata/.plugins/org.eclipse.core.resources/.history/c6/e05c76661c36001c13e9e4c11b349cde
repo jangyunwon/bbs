@@ -1,0 +1,124 @@
+package Study07_DB;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class CRUDTest {
+	Connection con=null;
+	Statement stmt = null;
+	int count;
+	//static 초기화 블럭 - 실행시 가장먼저 실행이 된다
+	static {try {
+		Class.forName("oracle.jdbc.driver.OracleDriver");
+	} catch (ClassNotFoundException e) {
+		
+	}
+		
+	}
+	public void connect() {
+		try {
+			
+			String url = "jdbc:oracle:thin:@localhost:1521:orcl";
+			con = DriverManager.getConnection(url, "javalink", "javalink");
+			System.out.println("Connection Success!!!");
+			
+		}catch (SQLException e) {
+				System.out.println("주소,id,pw가 다릅니다.");
+			}
+
+	}
+	public void insert(){
+	
+	// 'aaa','1111','홍길동','22','서울시','a@a.com'"
+		String query = "insert into goodsinfo values('aaa','1111','홍길동,'서울시','a@a.com')";
+		
+		try {
+			count = stmt.executeUpdate(query);
+			
+			if(count>0) {
+				System.out.println("insert success!");
+			} else {
+				System.out.println("insert fail!");
+			}
+		} catch (SQLException e) {
+			
+		}
+		
+	}
+	public void select(){
+		String query = "select * from member1";
+		 
+		try {
+			ResultSet rs = stmt.executeQuery(query);
+			while(rs.next()) {
+				String id = rs.getString("id");
+				String password = rs.getString("password");
+				String name = rs.getString("name");
+				String age = rs.getString("age");
+				String email = rs.getString("email");
+				System.out.println(id+" : "+password+" : "+name+" : "+age+" : "+email);
+				
+			}
+		} catch (SQLException e) {
+			
+		}
+		
+	}
+	
+	public void update(){
+ //id=aaa 를 찾아서 addr=부산시
+		String query = "update goodsinfo set id='aaa' where addr='부산시'";
+		
+		try {
+			count = stmt.executeUpdate(query);
+			if(count>0) {
+				System.out.println("insert success!");
+			} else {
+				System.out.println("insert fail!");
+			}
+		} catch (SQLException e) {
+		
+		}
+		
+	}
+	public void delete(){
+//id=aaa 삭제
+		String query = "delete goodsinfo where id='aaa'";
+		try {
+			count= stmt.executeUpdate(query);
+			if(count>0) {
+				System.out.println("insert success!");
+			} else {
+				System.out.println("insert fail!");
+			}
+		} catch (SQLException e) {
+			
+		}
+		
+	}
+
+
+	public static void main(String[] args) {
+		CRUDTest st = new CRUDTest();
+
+		System.out.println("insert 수행 후");
+		st.connect();
+	    st.select();
+		
+		st.connect();
+		st.update();
+		
+		System.out.println("update 수행 후");
+		
+		
+		
+		System.out.println("delete 수행 후");
+		st.connect();
+		st.select();				
+	}
+	}
+
+

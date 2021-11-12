@@ -1,0 +1,40 @@
+package test4.mvc;
+
+import java.util.Scanner;
+
+//VO = DTO = Bean = getter()&setter()
+public class ProductMain {
+	public static void main(String[] args) {
+		
+		
+		Scanner sc = new Scanner(System.in);
+		Service sv = new Serviceimpl();
+		//sv.addProduct();
+		sv.getProduct();
+//		do{
+//			
+//			System.out.println("1.제품등록 2.제품검색 3.전체검색 4.수정 5.삭제 6.종료");
+//			int number = sc.nextInt();
+//			if(number==1) {
+//				System.out.println("제품이름: ");
+//				String product = sc.next();
+//				System.out.println("제품가격: ");
+//				int price = sc.nextInt();
+//				
+//			}
+//			if(number==2) {
+//				System.out.println("검색할 제품번호: ");
+//				int num = sc.nextInt();
+//				
+//			}
+//			
+//			
+//			
+//			
+//		}
+//		while(!isStop); {
+//			
+//		}
+	}
+
+}
